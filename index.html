@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111519" />
+    <title>日出·印象 — 入画</title>
+    <link rel="icon" href="./sunrise.svg" type="image/svg+xml" />
+    <link rel="preload" as="image" href="./cover.webp" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="入画首页">
+        <img src="./sunrise.svg" width="36" height="36" alt="" />
+        <span>入画</span>
+      </a>
+      <div class="top-actions">
+        <button id="guide-open" class="quiet" type="button"><i data-icon="help"></i><span>飞行指南</span></button>
+        <button id="fullscreen" class="icon-button" type="button" title="全屏" aria-label="全屏"><i data-icon="expand"></i></button>
+      </div>
+    </header>
+
+    <main>
+      <section class="stage" id="stage" aria-label="勒阿弗尔港 3D 画境">
+        <div id="world" aria-hidden="true"></div>
+        <div class="cover" aria-hidden="true"></div>
+        <div class="stage-shade" aria-hidden="true"></div>
+        <div class="intro" id="intro">
+          <p class="credit"><span></span>克劳德·莫奈 <b>／</b> 1872</p>
+          <h1>日出<span>·</span>印象</h1>
+          <p class="original-title" lang="fr">Impression, soleil levant</p>
+          <p class="intro-copy">飞过晨雾与橙色的海光，走进莫奈笔下的勒阿弗尔。</p>
+          <button class="enter" id="enter" type="button"><i data-icon="play"></i>飞入画中<i class="enter-arrow" data-icon="arrow"></i></button>
+        </div>
+        <div class="stage-caption"><i data-icon="pin"></i><span>法国 · 勒阿弗尔港</span></div>
+        <div class="flight-hint" id="flight-hint">
+          <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>飞行</span><span class="hint-divider"></span><i data-icon="mouse"></i><span>拖动视角</span>
+        </div>
+        <div class="flight-toolbar" id="flight-toolbar" hidden>
+          <span class="flight-chapter" id="flight-chapter"></span>
+          <button id="mode" class="flight-button" type="button" aria-pressed="true"><i data-icon="compass"></i><span>随乐漫游</span></button>
+          <button id="reset-view" class="flight-button icon-button" type="button" title="回到本章视角" aria-label="回到本章视角"><i data-icon="reset"></i></button>
+        </div>
+        <button id="exit-fullscreen" class="flight-button icon-button exit-fullscreen" type="button" title="退出全屏" aria-label="退出全屏" hidden><i data-icon="collapse"></i></button>
+        <div class="touch-pad" id="touch-pad" hidden aria-label="触屏飞行方向">
+          <button data-key="KeyW" aria-label="前进">↑</button>
+          <button data-key="KeyA" aria-label="向左">←</button>
+          <button data-key="KeyS" aria-label="后退">↓</button>
+          <button data-key="KeyD" aria-label="向右">→</button>
+          <button data-key="Space" aria-label="上升">＋</button>
+          <button data-key="KeyC" aria-label="下降">−</button>
+        </div>
+        <p id="stage-error" class="stage-error" role="status" hidden></p>
+      </section>
+
+      <section class="score-panel" aria-labelledby="score-title">
+        <div class="score-header">
+          <div class="score-heading">
+            <div class="score-icon"><i data-icon="wave"></i></div>
+            <div><h2 id="score-title">乐章时间轴</h2><p>We Never (Remix)</p></div>
+          </div>
+          <div class="score-meta">
+            <span class="tempo"><strong id="bpm">112.79</strong> BPM</span>
+            <span class="beat-pattern" id="beat-pattern" aria-label="四四拍">
+              <span></span><span></span><span></span><span></span>
+            </span>
+            <a class="quiet download" href="./downbeats.csv" download title="下载重拍时间表"><i data-icon="download"></i><span>重拍表</span></a>
+          </div>
+        </div>
+        <div class="score-player">
+          <button class="round-play" id="play" type="button" aria-label="播放"><i data-icon="play"></i></button>
+          <time id="current">0:00</time>
+          <div class="scrubber">
+            <div class="track-base"><div id="beat-ticks"></div><div id="progress"></div></div>
+            <input id="seek" type="range" min="0" max="189.893" value="0" step="0.001" aria-label="播放进度" />
+          </div>
+          <time id="length">3:10</time>
+          <button class="icon-button sound-button" id="sound" type="button" aria-label="静音" aria-pressed="false"><i data-icon="sound"></i></button>
+        </div>
+        <nav id="chapters" class="chapters" aria-label="画境章节"></nav>
+      </section>
+    </main>
+
+    <dialog id="guide">
+      <div class="guide-top"><h2>飞行指南</h2><button id="guide-close" type="button" class="icon-button" aria-label="关闭"><i data-icon="close"></i></button></div>
+      <dl>
+        <div><dt>平移</dt><dd><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></dd></div>
+        <div><dt>升降</dt><dd><kbd>空格</kbd> <kbd>C</kbd></dd></div>
+        <div><dt>环顾</dt><dd>鼠标或手指拖动画面</dd></div>
+        <div><dt>触屏飞行</dt><dd>按住画面右下的方向键</dd></div>
+        <div><dt>随乐漫游</dt><dd>镜头随章节切换。开始操控即可自由飞行。</dd></div>
+      </dl>
+      <p>乐章变化与每小节第 1 拍对齐。点击时间轴下方的章节可跳到对应重拍。</p>
+    </dialog>
+    <audio id="score" src="./score.m4a" preload="auto"></audio>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
