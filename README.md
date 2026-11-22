@@ -4,6 +4,8 @@ An interactive 3D flight through Claude Monet’s Impression, Sunrise, paced by 
 
 以莫奈 1872 年的《日出·印象》为灵感，用 TypeScript 和 Three.js 重构勒阿弗尔港。封面和天空使用生成的油画纹理，水面、船、港口、雾与镜头在 WebGL 2 场景中实时渲染。
 
+[打开互动网页](https://0xzzwest.github.io/monet-harbor/)
+
 ## 运行
 
 需要 Node.js 22 或更新版本。
